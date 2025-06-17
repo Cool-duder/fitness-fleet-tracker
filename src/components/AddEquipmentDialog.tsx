@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -31,13 +32,20 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Form submitted with data:', formData);
+    
     const newEquipment = {
       ...formData,
       status: 'working',
       lastChecked: new Date().toISOString().split('T')[0]
     };
 
+    console.log('New equipment object created:', newEquipment);
+    console.log('Calling onAdd function...');
+    
     onAdd(newEquipment);
+    
+    console.log('Equipment added, resetting form...');
     
     // Reset form
     setFormData({
@@ -48,9 +56,12 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
       location: 'Hawthorn Park',
       notes: ''
     });
+
+    console.log('Form reset complete');
   };
 
   const handleChange = (field: string, value: string) => {
+    console.log(`Updating field ${field} with value:`, value);
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

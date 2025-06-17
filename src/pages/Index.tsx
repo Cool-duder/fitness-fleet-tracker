@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, Plus, Filter, CheckCircle, AlertTriangle, XCircle, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -128,12 +129,25 @@ const Index = () => {
   };
 
   const handleAddEquipment = (newEquipment: Omit<Equipment, 'id'>) => {
+    console.log('handleAddEquipment called with:', newEquipment);
+    console.log('Current equipment list length:', equipment.length);
+    
     const equipmentWithId: Equipment = {
       ...newEquipment,
       id: Date.now(),
       status: newEquipment.status as 'working' | 'needs-attention' | 'out-of-service'
     };
-    setEquipment(prev => [...prev, equipmentWithId]);
+    
+    console.log('Equipment with ID created:', equipmentWithId);
+    
+    setEquipment(prev => {
+      console.log('Previous equipment list:', prev);
+      const newList = [...prev, equipmentWithId];
+      console.log('New equipment list:', newList);
+      return newList;
+    });
+    
+    console.log('Closing dialog...');
     setShowAddDialog(false);
   };
 
