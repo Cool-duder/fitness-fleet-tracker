@@ -22,11 +22,12 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
     model: '',
     serialNumber: '',
     category: 'Cardio',
-    location: '',
+    location: 'Main Floor',
     notes: ''
   });
 
   const categories = ['Cardio', 'Strength', 'Free Weights', 'Accessories'];
+  const locations = ['Main Floor', 'Upper Level', 'Basement'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +46,7 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
       model: '',
       serialNumber: '',
       category: 'Cardio',
-      location: '',
+      location: 'Main Floor',
       notes: ''
     });
   };
@@ -111,13 +112,16 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
 
           <div>
             <Label htmlFor="location">Location</Label>
-            <Input
+            <select
               id="location"
               value={formData.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              placeholder="e.g., Cardio Section A"
-              required
-            />
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            >
+              {locations.map(location => (
+                <option key={location} value={location}>{location}</option>
+              ))}
+            </select>
           </div>
 
           <div>
