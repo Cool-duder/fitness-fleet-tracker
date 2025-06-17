@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Equipment {
   id: number;
@@ -33,6 +34,17 @@ const InspectionDialog: React.FC<InspectionDialogProps> = ({
   const [status, setStatus] = useState<'working' | 'needs-attention' | 'out-of-service'>(equipment.status);
   const [notes, setNotes] = useState(equipment.notes);
 
+  const predefinedNotes = [
+    'Needs Lubricant',
+    'Not functioning properly',
+    'Making noise',
+    'Out of order',
+    'Replace cable',
+    'Check belt and strap',
+    'Needs repair',
+    'Check fastener bolt or screw'
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -48,6 +60,15 @@ const InspectionDialog: React.FC<InspectionDialogProps> = ({
 
   const handleStatusChange = (newStatus: 'working' | 'needs-attention' | 'out-of-service') => {
     setStatus(newStatus);
+  };
+
+  const handlePredefinedNoteSelect = (selectedNote: string) => {
+    setNotes(prev => {
+      if (prev && !prev.endsWith('\n') && prev.length > 0) {
+        return prev + '\n' + selectedNote;
+      }
+      return prev + selectedNote;
+    });
   };
 
   return (
@@ -98,6 +119,22 @@ const InspectionDialog: React.FC<InspectionDialogProps> = ({
                 Out of Service
               </Button>
             </div>
+          </div>
+
+          <div>
+            <Label htmlFor="predefined-notes">Quick Notes</Label>
+            <Select onValueChange={handlePredefinedNoteSelect}>
+              <SelectTrigger className="w-full mt-1">
+                <SelectValue placeholder="Select a predefined note..." />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                {predefinedNotes.map((note) => (
+                  <SelectItem key={note} value={note}>
+                    {note}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
