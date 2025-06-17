@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
 import { CheckCircle, AlertTriangle, XCircle, Calendar, MapPin, Edit3, Wrench } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import InspectionDialog from './InspectionDialog';
+import EditEquipmentDialog from './EditEquipmentDialog';
+import ReplaceConfirmDialog from './ReplaceConfirmDialog';
 
 interface Equipment {
   id: number;
@@ -25,6 +26,9 @@ interface EquipmentCardProps {
 
 const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) => {
   const [showInspection, setShowInspection] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showReplaceConfirm, setShowReplaceConfirm] = useState(false);
+  const [equipmentToReplace, setEquipmentToReplace] = useState<Equipment | null>(null);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -58,6 +62,19 @@ const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) =>
       day: 'numeric',
       year: 'numeric'
     });
+  };
+
+  const handleReplace = (equipment: Equipment) => {
+    setEquipmentToReplace(equipment);
+    setShowReplaceConfirm(true);
+  };
+
+  const confirmReplace = () => {
+    if (equipmentToReplace) {
+      onUpdate(equipmentToReplace);
+    }
+    setShowReplaceConfirm(false);
+    setEquipmentToReplace(null);
   };
 
   return (
@@ -109,14 +126,22 @@ const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) =>
             </div>
           )}
 
-          <div className="flex gap-2 pt-2">
+          <div className="grid grid-cols-2 gap-2 pt-2">
             <Button
               onClick={() => setShowInspection(true)}
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700"
               size="sm"
             >
               <Wrench className="w-4 h-4 mr-2" />
               Inspect
+            </Button>
+            <Button
+              onClick={() => setShowEdit(true)}
+              variant="outline"
+              size="sm"
+            >
+              <Edit3 className="w-4 h-4 mr-2" />
+              Edit
             </Button>
           </div>
         </CardContent>
@@ -130,6 +155,21 @@ const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) =>
           onUpdate(updatedEquipment);
           setShowInspection(false);
         }}
+      />
+
+      <EditEquipmentDialog
+        open={showEdit}
+        onOpenChange={setShowEdit}
+        equipment={equipment}
+        onUpdate={onUpdate}
+        onReplace={handleReplace}
+      />
+
+      <ReplaceConfirmDialog
+        open={showReplaceConfirm}
+        onOpenChange={setShowReplaceConfirm}
+        equipment={equipmentToReplace || equipment}
+        onConfirm={confirmReplace}
       />
     </>
   );
