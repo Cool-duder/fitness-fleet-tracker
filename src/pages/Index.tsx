@@ -21,75 +21,296 @@ interface Equipment {
 
 // Sample equipment data with 3 locations
 const sampleEquipment: Equipment[] = [
+  // Hawthorn Park Equipment
   {
     id: 1,
-    name: "Treadmill Pro X1",
-    model: "TP-X1-2023",
-    serialNumber: "TP123456789",
+    name: "CYBEX Bike Spinner",
+    model: "770C",
+    serialNumber: "J0319-770C005N",
     category: "Cardio",
     status: "working",
-    lastChecked: "2024-06-15",
+    lastChecked: "2024-06-17",
     location: "Hawthorn Park",
-    notes: "All functions working properly"
+    notes: ""
   },
   {
     id: 2,
-    name: "Elliptical Elite",
-    model: "EE-450",
-    serialNumber: "EE987654321",
+    name: "CYBEX Bike Spinner",
+    model: "770C",
+    serialNumber: "J0721-770C008N",
     category: "Cardio",
-    status: "needs-attention",
-    lastChecked: "2024-06-14",
+    status: "working",
+    lastChecked: "2024-06-17",
     location: "Hawthorn Park",
-    notes: "Slight noise from left pedal"
+    notes: ""
   },
   {
     id: 3,
-    name: "Leg Press Machine",
-    model: "LP-800",
-    serialNumber: "LP555666777",
-    category: "Strength",
+    name: "CYBEX Treadmill Intelligent Suspension",
+    model: "770T",
+    serialNumber: "J0318-770TX062N",
+    category: "Cardio",
     status: "working",
-    lastChecked: "2024-06-16",
-    location: "The Encore",
-    notes: "Recently serviced"
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
   },
   {
     id: 4,
-    name: "Cable Crossover",
-    model: "CC-Dual-Pro",
-    serialNumber: "CC111222333",
-    category: "Strength",
-    status: "out-of-service",
-    lastChecked: "2024-06-13",
-    location: "The Encore",
-    notes: "Left cable needs replacement"
+    name: "CYBEX Treadmill Intelligent Suspension",
+    model: "770T",
+    serialNumber: "H0927-770TX058N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
   },
   {
     id: 5,
-    name: "Rowing Machine",
-    model: "RM-Concept2",
-    serialNumber: "RM444555666",
+    name: "CYBEX Treadmill Intelligent Suspension",
+    model: "770T",
+    serialNumber: "H1008-770TX067N",
     category: "Cardio",
     status: "working",
-    lastChecked: "2024-06-16",
-    location: "The Regent",
-    notes: "Excellent condition"
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
   },
   {
     id: 6,
-    name: "Spin Bike Pro",
-    model: "SB-Pro-2024",
-    serialNumber: "SB777888999",
+    name: "CYBEX Treadmill Intelligent Suspension",
+    model: "770T",
+    serialNumber: "J0218-770TX049N",
     category: "Cardio",
     status: "working",
-    lastChecked: "2024-06-15",
-    location: "The Regent",
-    notes: "New equipment, performing well"
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
   },
-  // Adding all The Encore equipment
   {
     id: 7,
+    name: "CYBEX Treadmill Intelligent Suspension",
+    model: "770T",
+    serialNumber: "J0218-770TX061N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 8,
+    name: "CYBEX Treadmill Intelligent Suspension",
+    model: "770T",
+    serialNumber: "J0318-770TX061N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 9,
+    name: "Stairs Master",
+    model: "SC",
+    serialNumber: "155005DAY13520020",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 10,
+    name: "CYBEX Arc Trainer",
+    model: "772AT",
+    serialNumber: "J0527772AT006N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 11,
+    name: "CYBEX Arc Trainer",
+    model: "772AT",
+    serialNumber: "J0527772AT009N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 12,
+    name: "CYBEX Arc Trainer",
+    model: "772AT",
+    serialNumber: "J0514772AT934N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 13,
+    name: "Octane Fitness",
+    model: "4700 Touch",
+    serialNumber: "F1403EL0097601",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 14,
+    name: "Octane Fitness",
+    model: "4700 Touch",
+    serialNumber: "F1403EL0097801",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 15,
+    name: "CYBEX Recom Recline Bike",
+    model: "770R",
+    serialNumber: "J0319-770R022N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 16,
+    name: "CYBEX Recom Recline Bike",
+    model: "770R",
+    serialNumber: "J0625-770R017N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 17,
+    name: "VR1 Lat/Row",
+    model: "13250",
+    serialNumber: "J062713250074N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 18,
+    name: "Bravo System Multi",
+    model: "8810",
+    serialNumber: "J071008810048N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 19,
+    name: "VR1 Fly/Delt",
+    model: "1311",
+    serialNumber: "J032013111430N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 20,
+    name: "VR1 Leg Press",
+    model: "13041",
+    serialNumber: "J041013041664N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 21,
+    name: "VR1 Leg Extension Leg Curl",
+    model: "13260",
+    serialNumber: "J041613260633N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 22,
+    name: "Bravo System Multi",
+    model: "8810",
+    serialNumber: "J071008810046N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 23,
+    name: "VR1 Hip Abduction/Adduction",
+    model: "13180",
+    serialNumber: "J062613180714N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 24,
+    name: "VR1 Multi Press",
+    model: "13240",
+    serialNumber: "J032013240497N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 25,
+    name: "Dip Multi",
+    model: "16180",
+    serialNumber: "J041016180091N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 26,
+    name: "Concept 2",
+    model: "1997 Model E",
+    serialNumber: "0529140-1997-410132628",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  // The Encore Equipment
+  {
+    id: 27,
     name: "CYBEX Treadmill",
     model: "770T",
     serialNumber: "L0516-770TX045N",
@@ -100,7 +321,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 8,
+    id: 28,
     name: "CYBEX Treadmill",
     model: "770T",
     serialNumber: "L0609-770TX041N",
@@ -111,7 +332,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 9,
+    id: 29,
     name: "CYBEX Treadmill",
     model: "770T",
     serialNumber: "L0527-770TX031N",
@@ -122,7 +343,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 10,
+    id: 30,
     name: "CYBEX Treadmill",
     model: "770T",
     serialNumber: "L0527-770TX034N",
@@ -133,7 +354,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 11,
+    id: 31,
     name: "CYBEX Treadmill",
     model: "770T",
     serialNumber: "L0603-770TX037N",  
@@ -144,7 +365,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 12,
+    id: 32,
     name: "CYBEX Recon Bike",
     model: "770R",
     serialNumber: "L0617-770R014N",
@@ -155,7 +376,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 13,
+    id: 33,
     name: "CYBEX Stationary Bike",
     model: "770C",
     serialNumber: "L0622-770C011N",
@@ -166,7 +387,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 14,
+    id: 34,
     name: "CYBEX Multipress",
     model: "13240",
     serialNumber: "L042713240819N",
@@ -177,7 +398,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 15,
+    id: 35,
     name: "CYBEX Leg Extension/Leg Curl",
     model: "13260",
     serialNumber: "L04271360152N",
@@ -188,7 +409,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 16,
+    id: 36,
     name: "CYBEX Leg Press",
     model: "13041",
     serialNumber: "L0420130-41092N",
@@ -199,7 +420,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 17,
+    id: 37,
     name: "CYBEX Chest Fly/Rear Delt",
     model: "13111",
     serialNumber: "L04271311727N",
@@ -210,7 +431,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 18,
+    id: 38,
     name: "CYBEX Lat/Rower",
     model: "13250",
     serialNumber: "K020513250001N",
@@ -221,7 +442,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 19,
+    id: 39,
     name: "CYBEX Incline/Decline Bench",
     model: "16171",
     serialNumber: "L05261671059N",
@@ -232,7 +453,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 20,
+    id: 40,
     name: "CYBEX Bravo Bench",
     model: "8821",
     serialNumber: "L051908821434N",
@@ -243,7 +464,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 21,
+    id: 41,
     name: "CYBEX Bravo Multi Unit",
     model: "8810",
     serialNumber: "L063008810193N",
@@ -254,7 +475,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 22,
+    id: 42,
     name: "CYBEX Adjustable Bench",
     model: "16001",
     serialNumber: "L062416001228N",
@@ -265,7 +486,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 23,
+    id: 43,
     name: "Octane Fitness",
     model: "XTONE",
     serialNumber: "F1601MA10577-01",
@@ -276,7 +497,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 24,
+    id: 44,
     name: "Octane Fitness",
     model: "XTONE",
     serialNumber: "F1601MA01585-01",
@@ -287,7 +508,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 25,
+    id: 45,
     name: "Octane Fitness",
     model: "PRO4700",
     serialNumber: "F1601MA01577-01",
@@ -298,7 +519,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 26,
+    id: 46,
     name: "Octane Fitness",
     model: "PRO4700",
     serialNumber: "F1605AP107776-02",
@@ -309,7 +530,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 27,
+    id: 47,
     name: "Octane Fitness",
     model: "XR600",
     serialNumber: "F1603AD08795-02",
@@ -320,7 +541,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 28,
+    id: 48,
     name: "Matrix Rower",
     model: "ROWER-01",
     serialNumber: "AR09151214079",
@@ -331,7 +552,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 29,
+    id: 49,
     name: "Schwinn Spinning Bike",
     model: "Carbon Blue",
     serialNumber: "002-2439",
@@ -342,7 +563,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 30,
+    id: 50,
     name: "CYBEX Back Extension",
     model: "16022",
     serialNumber: "L063016022016N",
@@ -353,7 +574,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 31,
+    id: 51,
     name: "CYBEX Hip Abduction/Adduction",
     model: "138180",
     serialNumber: "L052613180355N",
@@ -364,7 +585,7 @@ const sampleEquipment: Equipment[] = [
     notes: ""
   },
   {
-    id: 32,
+    id: 52,
     name: "Lat Pull Up/Dip/Abs Station",
     model: "16185",
     serialNumber: "L033116185573N",
@@ -373,6 +594,29 @@ const sampleEquipment: Equipment[] = [
     lastChecked: "2024-06-17",
     location: "The Encore",
     notes: ""
+  },
+  // The Regent Equipment (sample data)
+  {
+    id: 53,
+    name: "Rowing Machine",
+    model: "RM-Concept2",
+    serialNumber: "RM444555666",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-16",
+    location: "The Regent",
+    notes: "Excellent condition"
+  },
+  {
+    id: 54,
+    name: "Spin Bike Pro",
+    model: "SB-Pro-2024",
+    serialNumber: "SB777888999",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-15",
+    location: "The Regent",
+    notes: "New equipment, performing well"
   }
 ];
 
