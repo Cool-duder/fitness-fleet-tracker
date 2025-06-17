@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -31,8 +32,14 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     
     console.log('Form submitted with data:', formData);
+    
+    // Close virtual keyboard on mobile/iPad
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     
     const newEquipment = {
       ...formData,
@@ -43,21 +50,29 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
     console.log('New equipment object created:', newEquipment);
     console.log('Calling onAdd function...');
     
-    onAdd(newEquipment);
-    
-    console.log('Equipment added, resetting form...');
-    
-    // Reset form
-    setFormData({
-      name: '',
-      model: '',
-      serialNumber: '',
-      category: 'Cardio',
-      location: 'Hawthorn Park',
-      notes: ''
-    });
+    // Use setTimeout to ensure state updates don't conflict with dialog closing
+    setTimeout(() => {
+      onAdd(newEquipment);
+      
+      console.log('Equipment added, resetting form...');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        model: '',
+        serialNumber: '',
+        category: 'Cardio',
+        location: 'Hawthorn Park',
+        notes: ''
+      });
 
-    console.log('Form reset complete');
+      console.log('Form reset complete');
+      
+      // Close dialog after a brief delay
+      setTimeout(() => {
+        onOpenChange(false);
+      }, 100);
+    }, 50);
   };
 
   const handleChange = (field: string, value: string) => {
@@ -65,9 +80,20 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleAddClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Trigger form submission
+    const form = e.currentTarget.closest('form');
+    if (form) {
+      form.requestSubmit();
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add New Equipment</DialogTitle>
         </DialogHeader>
@@ -81,6 +107,7 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
               onChange={(e) => handleChange('name', e.target.value)}
               placeholder="e.g., Treadmill Pro X1"
               required
+              autoComplete="off"
             />
           </div>
 
@@ -92,6 +119,7 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
               onChange={(e) => handleChange('model', e.target.value)}
               placeholder="e.g., TP-X1-2023"
               required
+              autoComplete="off"
             />
           </div>
 
@@ -103,6 +131,7 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
               onChange={(e) => handleChange('serialNumber', e.target.value)}
               placeholder="e.g., TP123456789"
               required
+              autoComplete="off"
             />
           </div>
 
@@ -112,7 +141,8 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
               id="category"
               value={formData.category}
               onChange={(e) => handleChange('category', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-base"
+              style={{ fontSize: '16px' }} // Prevents zoom on iOS
             >
               {categories.map(category => (
                 <option key={category} value={category}>{category}</option>
@@ -126,7 +156,8 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
               id="location"
               value={formData.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-base"
+              style={{ fontSize: '16px' }} // Prevents zoom on iOS
             >
               {locations.map(location => (
                 <option key={location} value={location}>{location}</option>
@@ -142,18 +173,25 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
               onChange={(e) => handleChange('notes', e.target.value)}
               placeholder="Any additional information..."
               rows={3}
+              style={{ fontSize: '16px' }} // Prevents zoom on iOS
             />
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="submit" className="flex-1 bg-emerald-600 hover:bg-emerald-700">
+            <Button 
+              type="button"
+              onClick={handleAddClick}
+              className="flex-1 bg-emerald-600 hover:bg-emerald-700 touch-manipulation"
+              style={{ minHeight: '44px' }} // Better touch target for mobile
+            >
               Add Equipment
             </Button>
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              className="flex-1 touch-manipulation"
+              style={{ minHeight: '44px' }} // Better touch target for mobile
             >
               Cancel
             </Button>
@@ -165,3 +203,4 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
 };
 
 export default AddEquipmentDialog;
+
