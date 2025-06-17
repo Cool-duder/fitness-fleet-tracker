@@ -127,9 +127,9 @@ const InspectionDialog: React.FC<InspectionDialogProps> = ({
               <SelectTrigger className="w-full mt-1">
                 <SelectValue placeholder="Select a predefined note..." />
               </SelectTrigger>
-              <SelectContent className="bg-white">
+              <SelectContent className="bg-white z-50 border shadow-lg">
                 {predefinedNotes.map((note) => (
-                  <SelectItem key={note} value={note}>
+                  <SelectItem key={note} value={note} className="hover:bg-gray-100">
                     {note}
                   </SelectItem>
                 ))}
