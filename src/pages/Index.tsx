@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, Plus, Filter, CheckCircle, AlertTriangle, XCircle, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -32,7 +31,7 @@ const sampleEquipment: Equipment[] = [
     category: "Cardio",
     status: "working",
     lastChecked: "2024-06-15",
-    location: "Main Floor",
+    location: "Hawthorn Park",
     notes: "All functions working properly"
   },
   {
@@ -43,7 +42,7 @@ const sampleEquipment: Equipment[] = [
     category: "Cardio",
     status: "needs-attention",
     lastChecked: "2024-06-14",
-    location: "Main Floor",
+    location: "Hawthorn Park",
     notes: "Slight noise from left pedal"
   },
   {
@@ -99,9 +98,9 @@ const Index = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [activeLocation, setActiveLocation] = useState('Main Floor');
+  const [activeLocation, setActiveLocation] = useState('Hawthorn Park');
 
-  const locations = ['Main Floor', 'Upper Level', 'Basement'];
+  const locations = ['Hawthorn Park', 'Upper Level', 'Basement'];
   const categories = ['Cardio', 'Strength', 'Free Weights', 'Accessories'];
 
   const getLocationEquipment = (location: string) => {

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -22,12 +21,12 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
     model: '',
     serialNumber: '',
     category: 'Cardio',
-    location: 'Main Floor',
+    location: 'Hawthorn Park',
     notes: ''
   });
 
   const categories = ['Cardio', 'Strength', 'Free Weights', 'Accessories'];
-  const locations = ['Main Floor', 'Upper Level', 'Basement'];
+  const locations = ['Hawthorn Park', 'Upper Level', 'Basement'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +45,7 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
       model: '',
       serialNumber: '',
       category: 'Cardio',
-      location: 'Main Floor',
+      location: 'Hawthorn Park',
       notes: ''
     });
   };
