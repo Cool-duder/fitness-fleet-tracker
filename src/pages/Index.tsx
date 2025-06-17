@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, Plus, Filter, CheckCircle, AlertTriangle, XCircle, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -89,6 +88,293 @@ const sampleEquipment: Equipment[] = [
     lastChecked: "2024-06-15",
     location: "The Regent",
     notes: "New equipment, performing well"
+  },
+  // Adding all The Encore equipment
+  {
+    id: 7,
+    name: "CYBEX Treadmill",
+    model: "770T",
+    serialNumber: "L0516-770TX045N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 8,
+    name: "CYBEX Treadmill",
+    model: "770T",
+    serialNumber: "L0609-770TX041N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 9,
+    name: "CYBEX Treadmill",
+    model: "770T",
+    serialNumber: "L0527-770TX031N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 10,
+    name: "CYBEX Treadmill",
+    model: "770T",
+    serialNumber: "L0527-770TX034N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 11,
+    name: "CYBEX Treadmill",
+    model: "770T",
+    serialNumber: "L0603-770TX037N",  
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 12,
+    name: "CYBEX Recon Bike",
+    model: "770R",
+    serialNumber: "L0617-770R014N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 13,
+    name: "CYBEX Stationary Bike",
+    model: "770C",
+    serialNumber: "L0622-770C011N",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 14,
+    name: "CYBEX Multipress",
+    model: "13240",
+    serialNumber: "L042713240819N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 15,
+    name: "CYBEX Leg Extension/Leg Curl",
+    model: "13260",
+    serialNumber: "L04271360152N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 16,
+    name: "CYBEX Leg Press",
+    model: "13041",
+    serialNumber: "L0420130-41092N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 17,
+    name: "CYBEX Chest Fly/Rear Delt",
+    model: "13111",
+    serialNumber: "L04271311727N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 18,
+    name: "CYBEX Lat/Rower",
+    model: "13250",
+    serialNumber: "K020513250001N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 19,
+    name: "CYBEX Incline/Decline Bench",
+    model: "16171",
+    serialNumber: "L05261671059N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 20,
+    name: "CYBEX Bravo Bench",
+    model: "8821",
+    serialNumber: "L051908821434N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 21,
+    name: "CYBEX Bravo Multi Unit",
+    model: "8810",
+    serialNumber: "L063008810193N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 22,
+    name: "CYBEX Adjustable Bench",
+    model: "16001",
+    serialNumber: "L062416001228N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 23,
+    name: "Octane Fitness",
+    model: "XTONE",
+    serialNumber: "F1601MA10577-01",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 24,
+    name: "Octane Fitness",
+    model: "XTONE",
+    serialNumber: "F1601MA01585-01",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 25,
+    name: "Octane Fitness",
+    model: "PRO4700",
+    serialNumber: "F1601MA01577-01",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 26,
+    name: "Octane Fitness",
+    model: "PRO4700",
+    serialNumber: "F1605AP107776-02",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 27,
+    name: "Octane Fitness",
+    model: "XR600",
+    serialNumber: "F1603AD08795-02",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 28,
+    name: "Matrix Rower",
+    model: "ROWER-01",
+    serialNumber: "AR09151214079",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 29,
+    name: "Schwinn Spinning Bike",
+    model: "Carbon Blue",
+    serialNumber: "002-2439",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 30,
+    name: "CYBEX Back Extension",
+    model: "16022",
+    serialNumber: "L063016022016N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 31,
+    name: "CYBEX Hip Abduction/Adduction",
+    model: "138180",
+    serialNumber: "L052613180355N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
+  },
+  {
+    id: 32,
+    name: "Lat Pull Up/Dip/Abs Station",
+    model: "16185",
+    serialNumber: "L033116185573N",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Encore",
+    notes: ""
   }
 ];
 
