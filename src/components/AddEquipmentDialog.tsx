@@ -26,7 +26,7 @@ const AddEquipmentDialog: React.FC<AddEquipmentDialogProps> = ({
   });
 
   const categories = ['Cardio', 'Strength', 'Free Weights', 'Accessories'];
-  const locations = ['Hawthorn Park', 'Upper Level', 'Basement'];
+  const locations = ['Hawthorn Park', 'The Encore', 'The Regent'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -53,7 +53,7 @@ const sampleEquipment: Equipment[] = [
     category: "Strength",
     status: "working",
     lastChecked: "2024-06-16",
-    location: "Upper Level",
+    location: "The Encore",
     notes: "Recently serviced"
   },
   {
@@ -64,7 +64,7 @@ const sampleEquipment: Equipment[] = [
     category: "Strength",
     status: "out-of-service",
     lastChecked: "2024-06-13",
-    location: "Upper Level",
+    location: "The Encore",
     notes: "Left cable needs replacement"
   },
   {
@@ -75,7 +75,7 @@ const sampleEquipment: Equipment[] = [
     category: "Cardio",
     status: "working",
     lastChecked: "2024-06-16",
-    location: "Basement",
+    location: "The Regent",
     notes: "Excellent condition"
   },
   {
@@ -86,7 +86,7 @@ const sampleEquipment: Equipment[] = [
     category: "Cardio",
     status: "working",
     lastChecked: "2024-06-15",
-    location: "Basement",
+    location: "The Regent",
     notes: "New equipment, performing well"
   }
 ];
@@ -100,7 +100,7 @@ const Index = () => {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [activeLocation, setActiveLocation] = useState('Hawthorn Park');
 
-  const locations = ['Hawthorn Park', 'Upper Level', 'Basement'];
+  const locations = ['Hawthorn Park', 'The Encore', 'The Regent'];
   const categories = ['Cardio', 'Strength', 'Free Weights', 'Accessories'];
 
   const getLocationEquipment = (location: string) => {
