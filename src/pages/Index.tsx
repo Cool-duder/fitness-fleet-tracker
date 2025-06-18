@@ -595,28 +595,215 @@ const sampleEquipment: Equipment[] = [
     location: "The Encore",
     notes: ""
   },
-  // The Regent Equipment (sample data)
+  // The Regent Equipment - Updated with new comprehensive list
   {
     id: 53,
-    name: "Rowing Machine",
-    model: "RM-Concept2",
-    serialNumber: "RM444555666",
+    name: "Octane Fitness",
+    model: "XTONE",
+    serialNumber: "F1902SS00225-01",
     category: "Cardio",
     status: "working",
-    lastChecked: "2024-06-16",
+    lastChecked: "2024-06-17",
     location: "The Regent",
-    notes: "Excellent condition"
+    notes: ""
   },
   {
     id: 54,
-    name: "Spin Bike Pro",
-    model: "SB-Pro-2024",
-    serialNumber: "SB777888999",
+    name: "Octane Fitness",
+    model: "XTONE",
+    serialNumber: "F1907SS00416-01",
     category: "Cardio",
     status: "working",
-    lastChecked: "2024-06-15",
+    lastChecked: "2024-06-17",
     location: "The Regent",
-    notes: "New equipment, performing well"
+    notes: ""
+  },
+  {
+    id: 55,
+    name: "Octane Fitness",
+    model: "XTONE",
+    serialNumber: "F1902SS00220-01",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 56,
+    name: "True Treadmill Soft System",
+    model: "Soft System",
+    serialNumber: "19-TC6501041H",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 57,
+    name: "True Treadmill Soft System",
+    model: "Soft System",
+    serialNumber: "19-TC6500912G",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 58,
+    name: "True Treadmill Soft System",
+    model: "Soft System",
+    serialNumber: "19-TC6501042H",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 59,
+    name: "True Stationary Bike",
+    model: "Stationary Bike",
+    serialNumber: "19-4073001",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 60,
+    name: "Octane Fitness Recon",
+    model: "Recon",
+    serialNumber: "F1906SP00161-01",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 61,
+    name: "Lat Pulldown / Mid Row Hoist",
+    model: "HD-3200",
+    serialNumber: "18-03-A00-053126",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 62,
+    name: "Multi Unit Machine Cybex",
+    model: "zzzzz",
+    serialNumber: "18-03-A00-53135",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 63,
+    name: "XR650 Recumbent Elliptical Octane",
+    model: "XR650",
+    serialNumber: "F19065P00161-01",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 64,
+    name: "Stair Master",
+    model: "zzzzz",
+    serialNumber: "LD0303L18340224",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 65,
+    name: "True Fitness Stationary Bike",
+    model: "C400",
+    serialNumber: "19-4073001",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 66,
+    name: "True Fitness Treadmill",
+    model: "TC650",
+    serialNumber: "19-TC6501041H",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 67,
+    name: "True Fitness Treadmill",
+    model: "TC650",
+    serialNumber: "19-TC6500912G",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 68,
+    name: "True Fitness Treadmill",
+    model: "TC650",
+    serialNumber: "19-TC6501042H",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 69,
+    name: "Exercise Bench Octane",
+    model: "Bench",
+    serialNumber: "19-14-A04-035136",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 70,
+    name: "Exercise Bench Octane",
+    model: "Bench",
+    serialNumber: "19-14-A03-037090",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
+  },
+  {
+    id: 71,
+    name: "Decline Bench Octane",
+    model: "Bench",
+    serialNumber: "19-03-002-058397",
+    category: "Strength",
+    status: "working",
+    lastChecked: "2024-06-17",
+    location: "The Regent",
+    notes: ""
   }
 ];
 
