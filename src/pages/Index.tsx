@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Header from '@/components/Header';
@@ -307,6 +306,29 @@ const sampleEquipment: Equipment[] = [
     category: "Cardio",
     status: "working",
     lastChecked: "2024-06-17",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  // New TRUE TREADMILL units for Hawthorn Park
+  {
+    id: 72,
+    name: "TRUE TREADMILL",
+    model: "TC400-21",
+    serialNumber: "TC4000762E",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-18",
+    location: "Hawthorn Park",
+    notes: ""
+  },
+  {
+    id: 73,
+    name: "TRUE TREADMILL",
+    model: "TC400-21",
+    serialNumber: "TC4000761E",
+    category: "Cardio",
+    status: "working",
+    lastChecked: "2024-06-18",
     location: "Hawthorn Park",
     notes: ""
   },
