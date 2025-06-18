@@ -37,9 +37,20 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  const getMaintenanceChecklist = () => {
+    return [
+      'Vacuum Air Vent',
+      'Mop Floor',
+      'Bathroom',
+      'Painting Borders and Floor Panels',
+      'Vacuum Fitness Equipment'
+    ];
+  };
+
   const generateReport = () => {
     let report = `FITNESS EQUIPMENT WEEKLY REPORT\n`;
-    report += `Generated: ${new Date().toLocaleDateString()}\n\n`;
+    report += `Generated: ${new Date().toLocaleDateString()}\n`;
+    report += `Time: ${new Date().toLocaleTimeString()}\n\n`;
 
     locations.forEach(location => {
       const locationEquipment = equipment.filter(item => item.location === location);
@@ -47,32 +58,106 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
       const needsAttention = locationEquipment.filter(item => item.status === 'needs-attention').length;
       const outOfService = locationEquipment.filter(item => item.status === 'out-of-service').length;
 
-      report += `=== ${location.toUpperCase()} ===\n`;
-      report += `Total Equipment: ${locationEquipment.length}\n`;
-      report += `✅ Working: ${working}\n`;
-      report += `⚠️  Needs Attention: ${needsAttention}\n`;
-      report += `❌ Out of Service: ${outOfService}\n\n`;
+      report += `${'='.repeat(50)}\n`;
+      report += `${location.toUpperCase()} LOCATION REPORT\n`;
+      report += `${'='.repeat(50)}\n\n`;
 
+      // Equipment Summary
+      report += `EQUIPMENT SUMMARY:\n`;
+      report += `• Total Equipment: ${locationEquipment.length}\n`;
+      report += `• ✅ Working: ${working}\n`;
+      report += `• ⚠️  Needs Attention: ${needsAttention}\n`;
+      report += `• ❌ Out of Service: ${outOfService}\n\n`;
+
+      // Maintenance Checklist
+      report += `MAINTENANCE CHECKLIST:\n`;
+      report += `${'-'.repeat(30)}\n`;
+      const checklist = getMaintenanceChecklist();
+      checklist.forEach(item => {
+        report += `☐ ${item}\n`;
+      });
+      report += `\n`;
+
+      // Equipment Needing Attention
       if (needsAttention > 0) {
-        report += `Equipment Needing Attention:\n`;
+        report += `EQUIPMENT REQUIRING ATTENTION:\n`;
+        report += `${'-'.repeat(30)}\n`;
         locationEquipment
           .filter(item => item.status === 'needs-attention')
           .forEach(item => {
-            report += `- ${item.name} (${item.serialNumber}): ${item.notes}\n`;
+            report += `⚠️  ${item.name}\n`;
+            report += `   Model: ${item.model}\n`;
+            report += `   Serial Number: ${item.serialNumber}\n`;
+            report += `   Category: ${item.category}\n`;
+            report += `   Last Checked: ${new Date(item.lastChecked).toLocaleDateString()}\n`;
+            report += `   Notes: ${item.notes || 'No additional notes'}\n`;
+            report += `   Action Required: Maintenance/Inspection needed\n\n`;
           });
-        report += `\n`;
       }
 
+      // Out of Service Equipment
       if (outOfService > 0) {
-        report += `Out of Service Equipment:\n`;
+        report += `OUT OF SERVICE EQUIPMENT:\n`;
+        report += `${'-'.repeat(30)}\n`;
         locationEquipment
           .filter(item => item.status === 'out-of-service')
           .forEach(item => {
-            report += `- ${item.name} (${item.serialNumber}): ${item.notes}\n`;
+            report += `❌ ${item.name}\n`;
+            report += `   Model: ${item.model}\n`;
+            report += `   Serial Number: ${item.serialNumber}\n`;
+            report += `   Category: ${item.category}\n`;
+            report += `   Last Checked: ${new Date(item.lastChecked).toLocaleDateString()}\n`;
+            report += `   Notes: ${item.notes || 'No additional notes'}\n`;
+            report += `   Action Required: IMMEDIATE REPAIR/REPLACEMENT NEEDED\n\n`;
           });
+      }
+
+      // Working Equipment Summary
+      if (working > 0) {
+        report += `WORKING EQUIPMENT (${working} items):\n`;
+        report += `${'-'.repeat(30)}\n`;
+        const workingEquipment = locationEquipment.filter(item => item.status === 'working');
+        const cardioCount = workingEquipment.filter(item => item.category === 'Cardio').length;
+        const strengthCount = workingEquipment.filter(item => item.category === 'Strength').length;
+        const otherCount = workingEquipment.filter(item => !['Cardio', 'Strength'].includes(item.category)).length;
+        
+        report += `• Cardio Equipment: ${cardioCount} units\n`;
+        report += `• Strength Equipment: ${strengthCount} units\n`;
+        if (otherCount > 0) {
+          report += `• Other Equipment: ${otherCount} units\n`;
+        }
         report += `\n`;
       }
+
+      report += `${'-'.repeat(50)}\n\n`;
     });
+
+    // Overall Summary
+    const totalWorking = equipment.filter(item => item.status === 'working').length;
+    const totalNeedsAttention = equipment.filter(item => item.status === 'needs-attention').length;
+    const totalOutOfService = equipment.filter(item => item.status === 'out-of-service').length;
+
+    report += `OVERALL FACILITY SUMMARY:\n`;
+    report += `${'='.repeat(30)}\n`;
+    report += `Total Locations: ${locations.length}\n`;
+    report += `Total Equipment: ${equipment.length}\n`;
+    report += `Working: ${totalWorking} (${((totalWorking/equipment.length)*100).toFixed(1)}%)\n`;
+    report += `Needs Attention: ${totalNeedsAttention} (${((totalNeedsAttention/equipment.length)*100).toFixed(1)}%)\n`;
+    report += `Out of Service: ${totalOutOfService} (${((totalOutOfService/equipment.length)*100).toFixed(1)}%)\n\n`;
+
+    if (totalNeedsAttention > 0 || totalOutOfService > 0) {
+      report += `⚠️  PRIORITY ACTIONS REQUIRED:\n`;
+      if (totalOutOfService > 0) {
+        report += `• ${totalOutOfService} equipment units require immediate repair/replacement\n`;
+      }
+      if (totalNeedsAttention > 0) {
+        report += `• ${totalNeedsAttention} equipment units require maintenance/inspection\n`;
+      }
+      report += `\n`;
+    }
+
+    report += `Report generated by Equipment Management System\n`;
+    report += `For questions or concerns, please contact facility management.\n`;
 
     return report;
   };
@@ -93,7 +178,7 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
     
     try {
       const report = generateReport();
-      const subject = `Weekly Equipment Report - ${new Date().toLocaleDateString()}`;
+      const subject = `Weekly Equipment & Maintenance Report - ${new Date().toLocaleDateString()}`;
       
       // Create mailto link
       const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(report)}`;
@@ -103,7 +188,7 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
       
       toast({
         title: "Email Opened",
-        description: "Your default email client has been opened with the report",
+        description: "Your default email client has been opened with the comprehensive report",
       });
       
       onOpenChange(false);
@@ -179,6 +264,14 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
                 <span className="font-semibold">{stats.outOfService}</span>
               </div>
             </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <p className="text-xs text-gray-500">
+                ✓ Includes maintenance checklist for each location<br/>
+                ✓ Detailed equipment information for items needing attention<br/>
+                ✓ Complete facility overview and priority actions
+              </p>
+            </div>
           </div>
 
           {/* Email Form */}
@@ -201,7 +294,7 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
                 className="flex-1 bg-blue-600 hover:bg-blue-700"
                 disabled={isLoading}
               >
-                {isLoading ? 'Preparing...' : 'Send Report'}
+                {isLoading ? 'Preparing...' : 'Send Comprehensive Report'}
               </Button>
               <Button
                 type="button"
