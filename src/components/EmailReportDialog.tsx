@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -77,6 +76,11 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
         report += `☐ ${item}\n`;
       });
       report += `\n`;
+      report += `CHECKLIST STATUS: ☐ Completed ☐ Partially Completed ☐ Not Started\n`;
+      report += `MAINTENANCE NOTES:\n`;
+      report += `${'-'.repeat(20)}\n`;
+      report += `[Please fill in any specific notes about maintenance tasks performed]\n`;
+      report += `\n\n`;
 
       // Equipment Needing Attention
       if (needsAttention > 0) {

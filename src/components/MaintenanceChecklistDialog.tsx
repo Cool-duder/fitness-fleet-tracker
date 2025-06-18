@@ -1,11 +1,11 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Clock, Plus, Edit3, Trash2, Save, X } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { CheckCircle, Clock, Plus, Edit3, Trash2, Save, X, FileText } from 'lucide-react';
 
 interface MaintenanceChecklistDialogProps {
   open: boolean;
@@ -36,6 +36,7 @@ const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
   const [editingText, setEditingText] = useState('');
   const [newItemText, setNewItemText] = useState('');
   const [showAddInput, setShowAddInput] = useState(false);
+  const [notes, setNotes] = useState('');
 
   const handleItemCheck = (itemId: string, checked: boolean) => {
     setChecklistItems(prev => prev.map(item => 
@@ -211,6 +212,21 @@ const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
                 Add New Item
               </Button>
             )}
+          </div>
+
+          {/* Notes Section */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              <label htmlFor="notes" className="text-sm font-medium">Notes</label>
+            </div>
+            <Textarea
+              id="notes"
+              placeholder="Add any additional notes about the maintenance tasks..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="min-h-[80px]"
+            />
           </div>
 
           {allItemsCompleted && checklistItems.length > 0 && (
