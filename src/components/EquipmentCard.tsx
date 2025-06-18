@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { CheckCircle, AlertTriangle, XCircle, Calendar, MapPin, Edit3, Wrench } from 'lucide-react';
+import { CheckCircle, AlertTriangle, XCircle, Calendar, MapPin, Edit3, Wrench, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -22,9 +23,10 @@ interface Equipment {
 interface EquipmentCardProps {
   equipment: Equipment;
   onUpdate: (equipment: Equipment) => void;
+  onDelete: (equipmentId: number) => void;
 }
 
-const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) => {
+const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate, onDelete }) => {
   const [showInspection, setShowInspection] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showReplaceConfirm, setShowReplaceConfirm] = useState(false);
@@ -77,6 +79,12 @@ const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) =>
     setEquipmentToReplace(null);
   };
 
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete "${equipment.name}"?`)) {
+      onDelete(equipment.id);
+    }
+  };
+
   return (
     <>
       <Card className="hover:shadow-lg transition-shadow duration-200 border-l-4 border-l-emerald-500">
@@ -126,13 +134,13 @@ const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) =>
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-2 pt-2">
+          <div className="grid grid-cols-3 gap-2 pt-2">
             <Button
               onClick={() => setShowInspection(true)}
               className="bg-blue-600 hover:bg-blue-700"
               size="sm"
             >
-              <Wrench className="w-4 h-4 mr-2" />
+              <Wrench className="w-4 h-4 mr-1" />
               Inspect
             </Button>
             <Button
@@ -140,8 +148,17 @@ const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onUpdate }) =>
               variant="outline"
               size="sm"
             >
-              <Edit3 className="w-4 h-4 mr-2" />
+              <Edit3 className="w-4 h-4 mr-1" />
               Edit
+            </Button>
+            <Button
+              onClick={handleDelete}
+              variant="outline"
+              size="sm"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+            >
+              <Trash2 className="w-4 h-4 mr-1" />
+              Delete
             </Button>
           </div>
         </CardContent>

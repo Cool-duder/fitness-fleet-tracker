@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Header from '@/components/Header';
@@ -6,6 +7,7 @@ import SearchFilter from '@/components/SearchFilter';
 import EquipmentGrid from '@/components/EquipmentGrid';
 import AddEquipmentDialog from '@/components/AddEquipmentDialog';
 import EmailReportDialog from '@/components/EmailReportDialog';
+import MaintenanceChecklistDialog from '@/components/MaintenanceChecklistDialog';
 
 interface Equipment {
   id: number;
@@ -814,6 +816,7 @@ const Index = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [showMaintenanceDialog, setShowMaintenanceDialog] = useState(false);
   const [activeLocation, setActiveLocation] = useState('Hawthorn Park');
 
   const locations = ['Hawthorn Park', 'The Encore', 'The Regent'];
@@ -864,11 +867,16 @@ const Index = () => {
     ));
   };
 
+  const handleDeleteEquipment = (equipmentId: number) => {
+    setEquipment(prev => prev.filter(eq => eq.id !== equipmentId));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <Header 
         onAddEquipment={() => setShowAddDialog(true)}
         onEmailReport={() => setShowEmailDialog(true)}
+        onMaintenanceChecklist={() => setShowMaintenanceDialog(true)}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -902,6 +910,7 @@ const Index = () => {
                 <EquipmentGrid 
                   equipment={filteredEquipment}
                   onUpdateEquipment={handleUpdateEquipment}
+                  onDeleteEquipment={handleDeleteEquipment}
                 />
               </TabsContent>
             );
@@ -920,6 +929,12 @@ const Index = () => {
         onOpenChange={setShowEmailDialog}
         equipment={equipment}
         locations={locations}
+      />
+
+      <MaintenanceChecklistDialog
+        open={showMaintenanceDialog}
+        onOpenChange={setShowMaintenanceDialog}
+        location={activeLocation}
       />
     </div>
   );

@@ -1,42 +1,50 @@
 
 import React from 'react';
-import { Plus, Mail } from 'lucide-react';
+import { Plus, Mail, ClipboardCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
   onAddEquipment: () => void;
   onEmailReport: () => void;
+  onMaintenanceChecklist: () => void;
 }
 
-const Header = ({ onAddEquipment, onEmailReport }: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({ onAddEquipment, onEmailReport, onMaintenanceChecklist }) => {
   return (
-    <div className="bg-white shadow-sm border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <header className="bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Fitness Equipment Manager</h1>
-            <p className="mt-1 text-sm text-gray-500">Track and maintain your health club equipment</p>
+            <h1 className="text-2xl font-bold text-gray-900">Equipment Management</h1>
+            <p className="text-gray-600">Track and manage fitness equipment across all locations</p>
           </div>
-          <div className="flex gap-2 mt-4 sm:mt-0">
-            <Button 
-              onClick={onEmailReport}
-              variant="outline"
-              className="bg-blue-50 hover:bg-blue-100 border-blue-200"
+          
+          <div className="flex gap-3">
+            <Button
+              onClick={onMaintenanceChecklist}
+              className="bg-purple-600 hover:bg-purple-700"
             >
-              <Mail className="w-4 h-4 mr-2" />
-              Email Report
+              <ClipboardCheck className="w-4 h-4 mr-2" />
+              Maintenance Checklist
             </Button>
-            <Button 
+            <Button
               onClick={onAddEquipment}
               className="bg-emerald-600 hover:bg-emerald-700"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Equipment
             </Button>
+            <Button
+              onClick={onEmailReport}
+              variant="outline"
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              Email Report
+            </Button>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

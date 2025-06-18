@@ -17,9 +17,10 @@ interface Equipment {
 interface EquipmentGridProps {
   equipment: Equipment[];
   onUpdateEquipment: (updatedEquipment: Equipment) => void;
+  onDeleteEquipment: (equipmentId: number) => void;
 }
 
-const EquipmentGrid = ({ equipment, onUpdateEquipment }: EquipmentGridProps) => {
+const EquipmentGrid = ({ equipment, onUpdateEquipment, onDeleteEquipment }: EquipmentGridProps) => {
   if (equipment.length === 0) {
     return (
       <div className="text-center py-12">
@@ -35,6 +36,7 @@ const EquipmentGrid = ({ equipment, onUpdateEquipment }: EquipmentGridProps) => 
           key={item.id} 
           equipment={item}
           onUpdate={onUpdateEquipment}
+          onDelete={onDeleteEquipment}
         />
       ))}
     </div>
