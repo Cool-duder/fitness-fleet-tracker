@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Clock } from 'lucide-react';
+import { CheckCircle, Clock, Plus, Edit3, Trash2, Save, X } from 'lucide-react';
 
 interface MaintenanceChecklistDialogProps {
   open: boolean;
@@ -12,51 +13,93 @@ interface MaintenanceChecklistDialogProps {
   location: string;
 }
 
+interface ChecklistItem {
+  id: string;
+  label: string;
+  completed: boolean;
+}
+
 const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
   open,
   onOpenChange,
   location
 }) => {
-  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({
-    vacuumAirVent: false,
-    mobFloor: false,
-    bathroom: false,
-    paintingBordersFloorPanels: false,
-    vacuumFitnessEquipment: false
-  });
+  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([
+    { id: 'vacuumAirVent', label: 'Vacuum Air Vent', completed: false },
+    { id: 'mopFloor', label: 'Mop Floor', completed: false },
+    { id: 'bathroom', label: 'Bathroom', completed: false },
+    { id: 'paintingBordersFloorPanels', label: 'Painting Borders and Floor Panels', completed: false },
+    { id: 'vacuumFitnessEquipment', label: 'Vacuum Fitness Equipment', completed: false }
+  ]);
 
-  const checklistItems = [
-    { id: 'vacuumAirVent', label: 'Vacuum Air Vent' },
-    { id: 'mobFloor', label: 'Mop Floor' },
-    { id: 'bathroom', label: 'Bathroom' },
-    { id: 'paintingBordersFloorPanels', label: 'Painting Borders and Floor Panels' },
-    { id: 'vacuumFitnessEquipment', label: 'Vacuum Fitness Equipment' }
-  ];
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState('');
+  const [newItemText, setNewItemText] = useState('');
+  const [showAddInput, setShowAddInput] = useState(false);
 
   const handleItemCheck = (itemId: string, checked: boolean) => {
-    setCheckedItems(prev => ({
-      ...prev,
-      [itemId]: checked
-    }));
+    setChecklistItems(prev => prev.map(item => 
+      item.id === itemId ? { ...item, completed: checked } : item
+    ));
   };
 
-  const allItemsCompleted = Object.values(checkedItems).every(item => item);
-  const completedCount = Object.values(checkedItems).filter(item => item).length;
+  const handleStartEdit = (item: ChecklistItem) => {
+    setEditingId(item.id);
+    setEditingText(item.label);
+  };
+
+  const handleSaveEdit = () => {
+    if (editingId && editingText.trim()) {
+      setChecklistItems(prev => prev.map(item => 
+        item.id === editingId ? { ...item, label: editingText.trim() } : item
+      ));
+    }
+    setEditingId(null);
+    setEditingText('');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditingText('');
+  };
+
+  const handleDeleteItem = (itemId: string) => {
+    setChecklistItems(prev => prev.filter(item => item.id !== itemId));
+  };
+
+  const handleAddItem = () => {
+    if (newItemText.trim()) {
+      const newItem: ChecklistItem = {
+        id: `item_${Date.now()}`,
+        label: newItemText.trim(),
+        completed: false
+      };
+      setChecklistItems(prev => [...prev, newItem]);
+      setNewItemText('');
+      setShowAddInput(false);
+    }
+  };
+
+  const handleCancelAdd = () => {
+    setNewItemText('');
+    setShowAddInput(false);
+  };
+
+  const allItemsCompleted = checklistItems.every(item => item.completed);
+  const completedCount = checklistItems.filter(item => item.completed).length;
 
   const handleClose = () => {
-    setCheckedItems({
-      vacuumAirVent: false,
-      mobFloor: false,
-      bathroom: false,
-      paintingBordersFloorPanels: false,
-      vacuumFitnessEquipment: false
-    });
+    setChecklistItems(prev => prev.map(item => ({ ...item, completed: false })));
+    setEditingId(null);
+    setEditingText('');
+    setNewItemText('');
+    setShowAddInput(false);
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Clock className="w-5 h-5" />
@@ -74,28 +117,103 @@ const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
 
           <div className="space-y-3">
             {checklistItems.map((item) => (
-              <div key={item.id} className="flex items-center space-x-3">
+              <div key={item.id} className="flex items-center space-x-2 group">
                 <Checkbox
                   id={item.id}
-                  checked={checkedItems[item.id]}
+                  checked={item.completed}
                   onCheckedChange={(checked) => handleItemCheck(item.id, checked as boolean)}
                 />
-                <label
-                  htmlFor={item.id}
-                  className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
-                    checkedItems[item.id] ? 'line-through text-gray-500' : ''
-                  }`}
-                >
-                  {item.label}
-                </label>
-                {checkedItems[item.id] && (
-                  <CheckCircle className="w-4 h-4 text-green-600" />
+                
+                {editingId === item.id ? (
+                  <div className="flex items-center space-x-2 flex-1">
+                    <Input
+                      value={editingText}
+                      onChange={(e) => setEditingText(e.target.value)}
+                      className="flex-1"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSaveEdit();
+                        if (e.key === 'Escape') handleCancelEdit();
+                      }}
+                      autoFocus
+                    />
+                    <Button size="sm" onClick={handleSaveEdit} className="p-1 h-8 w-8">
+                      <Save className="w-3 h-3" />
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={handleCancelEdit} className="p-1 h-8 w-8">
+                      <X className="w-3 h-3" />
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <label
+                      htmlFor={item.id}
+                      className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex-1 ${
+                        item.completed ? 'line-through text-gray-500' : ''
+                      }`}
+                    >
+                      {item.label}
+                    </label>
+                    {item.completed && (
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                    )}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleStartEdit(item)}
+                        className="p-1 h-6 w-6"
+                      >
+                        <Edit3 className="w-3 h-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleDeleteItem(item.id)}
+                        className="p-1 h-6 w-6 text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  </>
                 )}
               </div>
             ))}
+
+            {showAddInput ? (
+              <div className="flex items-center space-x-2">
+                <div className="w-4" /> {/* Spacer for checkbox alignment */}
+                <Input
+                  value={newItemText}
+                  onChange={(e) => setNewItemText(e.target.value)}
+                  placeholder="Enter new checklist item..."
+                  className="flex-1"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleAddItem();
+                    if (e.key === 'Escape') handleCancelAdd();
+                  }}
+                  autoFocus
+                />
+                <Button size="sm" onClick={handleAddItem} className="p-1 h-8 w-8">
+                  <Save className="w-3 h-3" />
+                </Button>
+                <Button size="sm" variant="outline" onClick={handleCancelAdd} className="p-1 h-8 w-8">
+                  <X className="w-3 h-3" />
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowAddInput(true)}
+                className="w-full"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add New Item
+              </Button>
+            )}
           </div>
 
-          {allItemsCompleted && (
+          {allItemsCompleted && checklistItems.length > 0 && (
             <div className="p-3 bg-green-50 border border-green-200 rounded-md">
               <p className="text-sm text-green-800 font-medium">
                 ✅ All maintenance tasks completed for {location}!
