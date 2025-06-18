@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { CheckCircle, AlertTriangle, XCircle, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getAllMaintenanceRecords, getDefaultChecklistItems } from '@/utils/maintenanceState';
 
 interface Equipment {
   id: number;
@@ -36,17 +37,9 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const getMaintenanceChecklist = () => {
-    return [
-      'Vacuum Air Vent',
-      'Mop Floor',
-      'Bathroom',
-      'Painting Borders and Floor Panels',
-      'Vacuum Fitness Equipment'
-    ];
-  };
-
   const generateReport = () => {
+    const maintenanceRecords = getAllMaintenanceRecords();
+    
     let report = `FITNESS EQUIPMENT WEEKLY REPORT\n`;
     report += `Generated: ${new Date().toLocaleDateString()}\n`;
     report += `Time: ${new Date().toLocaleTimeString()}\n\n`;
@@ -56,6 +49,12 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
       const working = locationEquipment.filter(item => item.status === 'working').length;
       const needsAttention = locationEquipment.filter(item => item.status === 'needs-attention').length;
       const outOfService = locationEquipment.filter(item => item.status === 'out-of-service').length;
+
+      // Get maintenance record for this location
+      const maintenanceRecord = maintenanceRecords.find(record => record.location === location);
+      const checklistItems = maintenanceRecord?.checklistItems || getDefaultChecklistItems();
+      const completedItems = checklistItems.filter(item => item.completed).length;
+      const totalItems = checklistItems.length;
 
       report += `${'='.repeat(50)}\n`;
       report += `${location.toUpperCase()} LOCATION REPORT\n`;
@@ -68,18 +67,36 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
       report += `• ⚠️  Needs Attention: ${needsAttention}\n`;
       report += `• ❌ Out of Service: ${outOfService}\n\n`;
 
-      // Maintenance Checklist
+      // Maintenance Checklist with actual status
       report += `MAINTENANCE CHECKLIST:\n`;
       report += `${'-'.repeat(30)}\n`;
-      const checklist = getMaintenanceChecklist();
-      checklist.forEach(item => {
-        report += `☐ ${item}\n`;
+      checklistItems.forEach(item => {
+        const checkmark = item.completed ? '☑️' : '☐';
+        report += `${checkmark} ${item.label}\n`;
       });
       report += `\n`;
-      report += `CHECKLIST STATUS: ☐ Completed ☐ Partially Completed ☐ Not Started\n`;
+      
+      // Checklist completion status
+      let checklistStatus = 'Not Started';
+      if (completedItems === totalItems && totalItems > 0) {
+        checklistStatus = 'Completed';
+      } else if (completedItems > 0) {
+        checklistStatus = 'Partially Completed';
+      }
+      
+      report += `CHECKLIST STATUS: ${checklistStatus} (${completedItems}/${totalItems} items completed)\n`;
+      
+      if (maintenanceRecord?.lastUpdated) {
+        report += `LAST UPDATED: ${new Date(maintenanceRecord.lastUpdated).toLocaleDateString()} at ${new Date(maintenanceRecord.lastUpdated).toLocaleTimeString()}\n`;
+      }
+      
       report += `MAINTENANCE NOTES:\n`;
       report += `${'-'.repeat(20)}\n`;
-      report += `[Please fill in any specific notes about maintenance tasks performed]\n`;
+      if (maintenanceRecord?.notes && maintenanceRecord.notes.trim()) {
+        report += `${maintenanceRecord.notes}\n`;
+      } else {
+        report += `[No additional notes provided]\n`;
+      }
       report += `\n\n`;
 
       // Equipment Needing Attention
@@ -184,10 +201,8 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
       const report = generateReport();
       const subject = `Weekly Equipment & Maintenance Report - ${new Date().toLocaleDateString()}`;
       
-      // Create mailto link
       const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(report)}`;
       
-      // Open default email client
       window.location.href = mailtoLink;
       
       toast({
@@ -228,7 +243,6 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Report Preview */}
           <div className="bg-gray-50 rounded-lg p-4">
             <h3 className="font-semibold text-gray-900 mb-3">Report Summary</h3>
             
@@ -271,14 +285,13 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
 
             <div className="mt-4 pt-4 border-t border-gray-200">
               <p className="text-xs text-gray-500">
-                ✓ Includes maintenance checklist for each location<br/>
-                ✓ Detailed equipment information for items needing attention<br/>
-                ✓ Complete facility overview and priority actions
+                ✓ Shows actual maintenance checklist completion status<br/>
+                ✓ Includes maintenance notes for each location<br/>
+                ✓ Detailed equipment information and priority actions
               </p>
             </div>
           </div>
 
-          {/* Email Form */}
           <form onSubmit={handleSendEmail} className="space-y-4">
             <div>
               <Label htmlFor="email">Email Address</Label>

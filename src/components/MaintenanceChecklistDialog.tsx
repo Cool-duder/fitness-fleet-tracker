@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,6 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { CheckCircle, Clock, Plus, Edit3, Trash2, Save, X, FileText } from 'lucide-react';
+import { getMaintenanceRecord, saveMaintenanceRecord, getDefaultChecklistItems } from '@/utils/maintenanceState';
 
 interface MaintenanceChecklistDialogProps {
   open: boolean;
@@ -24,19 +25,33 @@ const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
   onOpenChange,
   location
 }) => {
-  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([
-    { id: 'vacuumAirVent', label: 'Vacuum Air Vent', completed: false },
-    { id: 'mopFloor', label: 'Mop Floor', completed: false },
-    { id: 'bathroom', label: 'Bathroom', completed: false },
-    { id: 'paintingBordersFloorPanels', label: 'Painting Borders and Floor Panels', completed: false },
-    { id: 'vacuumFitnessEquipment', label: 'Vacuum Fitness Equipment', completed: false }
-  ]);
-
+  const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState('');
   const [newItemText, setNewItemText] = useState('');
   const [showAddInput, setShowAddInput] = useState(false);
   const [notes, setNotes] = useState('');
+
+  // Load maintenance record when dialog opens or location changes
+  useEffect(() => {
+    if (open && location) {
+      const record = getMaintenanceRecord(location);
+      if (record) {
+        setChecklistItems(record.checklistItems);
+        setNotes(record.notes);
+      } else {
+        setChecklistItems(getDefaultChecklistItems());
+        setNotes('');
+      }
+    }
+  }, [open, location]);
+
+  // Save maintenance record whenever items or notes change
+  useEffect(() => {
+    if (location && checklistItems.length > 0) {
+      saveMaintenanceRecord(location, checklistItems, notes);
+    }
+  }, [location, checklistItems, notes]);
 
   const handleItemCheck = (itemId: string, checked: boolean) => {
     setChecklistItems(prev => prev.map(item => 
@@ -90,11 +105,6 @@ const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
   const completedCount = checklistItems.filter(item => item.completed).length;
 
   const handleClose = () => {
-    setChecklistItems(prev => prev.map(item => ({ ...item, completed: false })));
-    setEditingId(null);
-    setEditingText('');
-    setNewItemText('');
-    setShowAddInput(false);
     onOpenChange(false);
   };
 
@@ -182,7 +192,7 @@ const MaintenanceChecklistDialog: React.FC<MaintenanceChecklistDialogProps> = ({
 
             {showAddInput ? (
               <div className="flex items-center space-x-2">
-                <div className="w-4" /> {/* Spacer for checkbox alignment */}
+                <div className="w-4" />
                 <Input
                   value={newItemText}
                   onChange={(e) => setNewItemText(e.target.value)}
