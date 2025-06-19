@@ -56,86 +56,91 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
       const completedItems = checklistItems.filter(item => item.completed).length;
       const totalItems = checklistItems.length;
 
-      report += `${'='.repeat(50)}\n`;
-      report += `${location.toUpperCase()} LOCATION REPORT\n`;
-      report += `${'='.repeat(50)}\n\n`;
+      report += `${'='.repeat(60)}\n`;
+      report += `${location.toUpperCase()} - LOCATION REPORT\n`;
+      report += `${'='.repeat(60)}\n\n`;
 
-      // Equipment Summary
-      report += `EQUIPMENT SUMMARY:\n`;
-      report += `• Total Equipment: ${locationEquipment.length}\n`;
-      report += `• ✅ Working: ${working}\n`;
-      report += `• ⚠️  Needs Attention: ${needsAttention}\n`;
-      report += `• ❌ Out of Service: ${outOfService}\n\n`;
-
-      // Maintenance Checklist with actual status
-      report += `MAINTENANCE CHECKLIST:\n`;
-      report += `${'-'.repeat(30)}\n`;
-      checklistItems.forEach(item => {
-        const checkmark = item.completed ? '☑️' : '☐';
-        report += `${checkmark} ${item.label}\n`;
-      });
-      report += `\n`;
+      // MAINTENANCE CHECKLIST - PROMINENTLY DISPLAYED
+      report += `🔧 MAINTENANCE CHECKLIST RESULTS:\n`;
+      report += `${'-'.repeat(40)}\n`;
       
-      // Checklist completion status
-      let checklistStatus = 'Not Started';
+      // Show completion status first
+      let checklistStatus = 'NOT STARTED';
+      let statusIcon = '❌';
       if (completedItems === totalItems && totalItems > 0) {
-        checklistStatus = 'Completed';
+        checklistStatus = 'COMPLETED ✅';
+        statusIcon = '✅';
       } else if (completedItems > 0) {
-        checklistStatus = 'Partially Completed';
+        checklistStatus = 'IN PROGRESS ⚠️';
+        statusIcon = '⚠️';
       }
       
-      report += `CHECKLIST STATUS: ${checklistStatus} (${completedItems}/${totalItems} items completed)\n`;
+      report += `STATUS: ${statusIcon} ${checklistStatus} (${completedItems}/${totalItems} tasks completed)\n`;
       
       if (maintenanceRecord?.lastUpdated) {
         report += `LAST UPDATED: ${new Date(maintenanceRecord.lastUpdated).toLocaleDateString()} at ${new Date(maintenanceRecord.lastUpdated).toLocaleTimeString()}\n`;
       }
+      report += `\n`;
+
+      // Individual checklist items with check-off status
+      report += `DETAILED CHECKLIST:\n`;
+      checklistItems.forEach(item => {
+        const checkmark = item.completed ? '☑️ DONE' : '☐ PENDING';
+        report += `  ${checkmark} - ${item.label}\n`;
+      });
+      report += `\n`;
       
+      // Maintenance notes
       report += `MAINTENANCE NOTES:\n`;
       report += `${'-'.repeat(20)}\n`;
       if (maintenanceRecord?.notes && maintenanceRecord.notes.trim()) {
         report += `${maintenanceRecord.notes}\n`;
       } else {
-        report += `[No additional notes provided]\n`;
+        report += `[No additional maintenance notes provided]\n`;
       }
-      report += `\n\n`;
+      report += `\n`;
+
+      // Equipment Summary
+      report += `📊 EQUIPMENT SUMMARY:\n`;
+      report += `${'-'.repeat(25)}\n`;
+      report += `• Total Equipment: ${locationEquipment.length}\n`;
+      report += `• ✅ Working: ${working}\n`;
+      report += `• ⚠️  Needs Attention: ${needsAttention}\n`;
+      report += `• ❌ Out of Service: ${outOfService}\n\n`;
 
       // Equipment Needing Attention
       if (needsAttention > 0) {
-        report += `EQUIPMENT REQUIRING ATTENTION:\n`;
-        report += `${'-'.repeat(30)}\n`;
+        report += `⚠️  EQUIPMENT REQUIRING ATTENTION:\n`;
+        report += `${'-'.repeat(35)}\n`;
         locationEquipment
           .filter(item => item.status === 'needs-attention')
           .forEach(item => {
-            report += `⚠️  ${item.name}\n`;
-            report += `   Model: ${item.model}\n`;
-            report += `   Serial Number: ${item.serialNumber}\n`;
-            report += `   Category: ${item.category}\n`;
-            report += `   Last Checked: ${new Date(item.lastChecked).toLocaleDateString()}\n`;
-            report += `   Notes: ${item.notes || 'No additional notes'}\n`;
-            report += `   Action Required: Maintenance/Inspection needed\n\n`;
+            report += `• ${item.name} (${item.model})\n`;
+            report += `  Serial: ${item.serialNumber} | Category: ${item.category}\n`;
+            report += `  Last Checked: ${new Date(item.lastChecked).toLocaleDateString()}\n`;
+            report += `  Notes: ${item.notes || 'No additional notes'}\n`;
+            report += `  Action Required: Maintenance/Inspection needed\n\n`;
           });
       }
 
       // Out of Service Equipment
       if (outOfService > 0) {
-        report += `OUT OF SERVICE EQUIPMENT:\n`;
+        report += `❌ OUT OF SERVICE EQUIPMENT:\n`;
         report += `${'-'.repeat(30)}\n`;
         locationEquipment
           .filter(item => item.status === 'out-of-service')
           .forEach(item => {
-            report += `❌ ${item.name}\n`;
-            report += `   Model: ${item.model}\n`;
-            report += `   Serial Number: ${item.serialNumber}\n`;
-            report += `   Category: ${item.category}\n`;
-            report += `   Last Checked: ${new Date(item.lastChecked).toLocaleDateString()}\n`;
-            report += `   Notes: ${item.notes || 'No additional notes'}\n`;
-            report += `   Action Required: IMMEDIATE REPAIR/REPLACEMENT NEEDED\n\n`;
+            report += `• ${item.name} (${item.model})\n`;
+            report += `  Serial: ${item.serialNumber} | Category: ${item.category}\n`;
+            report += `  Last Checked: ${new Date(item.lastChecked).toLocaleDateString()}\n`;
+            report += `  Notes: ${item.notes || 'No additional notes'}\n`;
+            report += `  Action Required: IMMEDIATE REPAIR/REPLACEMENT NEEDED\n\n`;
           });
       }
 
       // Working Equipment Summary
       if (working > 0) {
-        report += `WORKING EQUIPMENT (${working} items):\n`;
+        report += `✅ WORKING EQUIPMENT (${working} items):\n`;
         report += `${'-'.repeat(30)}\n`;
         const workingEquipment = locationEquipment.filter(item => item.status === 'working');
         const cardioCount = workingEquipment.filter(item => item.category === 'Cardio').length;
@@ -150,16 +155,34 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
         report += `\n`;
       }
 
-      report += `${'-'.repeat(50)}\n\n`;
+      report += `${'-'.repeat(60)}\n\n`;
     });
 
-    // Overall Summary
+    // Overall Summary with Maintenance Overview
     const totalWorking = equipment.filter(item => item.status === 'working').length;
     const totalNeedsAttention = equipment.filter(item => item.status === 'needs-attention').length;
     const totalOutOfService = equipment.filter(item => item.status === 'out-of-service').length;
 
-    report += `OVERALL FACILITY SUMMARY:\n`;
-    report += `${'='.repeat(30)}\n`;
+    report += `🏢 OVERALL FACILITY SUMMARY:\n`;
+    report += `${'='.repeat(35)}\n`;
+    
+    // Maintenance completion overview
+    const maintenanceOverview = locations.map(location => {
+      const record = maintenanceRecords.find(r => r.location === location);
+      const items = record?.checklistItems || getDefaultChecklistItems();
+      const completed = items.filter(item => item.completed).length;
+      const total = items.length;
+      return { location, completed, total, percentage: Math.round((completed/total)*100) };
+    });
+
+    report += `MAINTENANCE COMPLETION BY LOCATION:\n`;
+    maintenanceOverview.forEach(({ location, completed, total, percentage }) => {
+      const status = percentage === 100 ? '✅' : percentage > 0 ? '⚠️' : '❌';
+      report += `${status} ${location}: ${completed}/${total} tasks (${percentage}%)\n`;
+    });
+    report += `\n`;
+
+    report += `EQUIPMENT TOTALS:\n`;
     report += `Total Locations: ${locations.length}\n`;
     report += `Total Equipment: ${equipment.length}\n`;
     report += `Working: ${totalWorking} (${((totalWorking/equipment.length)*100).toFixed(1)}%)\n`;
@@ -167,12 +190,18 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
     report += `Out of Service: ${totalOutOfService} (${((totalOutOfService/equipment.length)*100).toFixed(1)}%)\n\n`;
 
     if (totalNeedsAttention > 0 || totalOutOfService > 0) {
-      report += `⚠️  PRIORITY ACTIONS REQUIRED:\n`;
+      report += `🚨 PRIORITY ACTIONS REQUIRED:\n`;
       if (totalOutOfService > 0) {
         report += `• ${totalOutOfService} equipment units require immediate repair/replacement\n`;
       }
       if (totalNeedsAttention > 0) {
         report += `• ${totalNeedsAttention} equipment units require maintenance/inspection\n`;
+      }
+      
+      // Add maintenance completion priorities
+      const incompleteLocations = maintenanceOverview.filter(loc => loc.percentage < 100);
+      if (incompleteLocations.length > 0) {
+        report += `• Complete maintenance checklists for: ${incompleteLocations.map(loc => loc.location).join(', ')}\n`;
       }
       report += `\n`;
     }
@@ -285,8 +314,9 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
 
             <div className="mt-4 pt-4 border-t border-gray-200">
               <p className="text-xs text-gray-500">
-                ✓ Shows actual maintenance checklist completion status<br/>
-                ✓ Includes maintenance notes for each location<br/>
+                ✓ Shows individual maintenance checklist completion for each location<br/>
+                ✓ Displays check-off status for each maintenance task<br/>
+                ✓ Includes location-specific notes and completion percentages<br/>
                 ✓ Detailed equipment information and priority actions
               </p>
             </div>
@@ -311,7 +341,7 @@ const EmailReportDialog: React.FC<EmailReportDialogProps> = ({
                 className="flex-1 bg-blue-600 hover:bg-blue-700"
                 disabled={isLoading}
               >
-                {isLoading ? 'Preparing...' : 'Send Comprehensive Report'}
+                {isLoading ? 'Preparing...' : 'Send Location-Specific Report'}
               </Button>
               <Button
                 type="button"
